@@ -1,5 +1,6 @@
 stages:
   - check
+  - spinup
   - package
 
 check-helm:
@@ -7,9 +8,12 @@ check-helm:
   script:
     - helm lint ./microservice
 
+spinup-chartmuseum:
+  stage: spinup
+  script:
+    - docker compose up -d
+
 package-helm:
   stage: package
   script:
-    - helm repo add microservice http://localhost:8080
-    - helm plugin install https://github.com/chartmuseum/helm-push
-    - helm cm-push ./microservice http://localhost:8080
+    - ./helm-push.sh

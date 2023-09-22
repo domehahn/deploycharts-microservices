@@ -1,0 +1,22 @@
+version: '2.0'
+services:
+  ui:
+    image: chrispnugget88/chartmuseumui:latest
+    environment:
+      CHART_MUSEUM_URL: http://chartmuseum:8080
+    ports:
+      - 3000:8080
+  chartmuseum:
+    image: chartmuseum/chartmuseum:latest
+    ports:
+    - 8080:8080
+    volumes:
+    - ./charts:/charts
+    environment:
+      PORT: 8080
+      DEBUG: 1
+      STORAGE: local
+      STORAGE_LOCAL_ROOTDIR: /charts
+  
+volumes:
+  chartmuseum_data:
